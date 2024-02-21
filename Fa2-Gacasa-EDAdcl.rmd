@@ -1,0 +1,21 @@
+---
+title: "Fa2 Gacasa EDA dcl"
+output: html_document
+date: "2024-02-21"
+---
+
+```{r}
+library(dcldata)
+library(tidyr)
+```
+
+```{r}
+gym <-data(example_gymnastics_2)
+head(example_gymnastics_2)
+```
+
+```{r}
+example_gymnastics_2 %>% 
+pivot_longer(cols = !country,names_to = c("event", "year"),names_sep = "_",values_to = "score"
+  )
+```

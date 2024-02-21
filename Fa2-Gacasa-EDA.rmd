@@ -1,0 +1,42 @@
+---
+title: "Gacasa_FA2"
+output: html_document
+date: "2024-02-21"
+---
+```{r}
+library(tidyr)
+library(readr)
+library(dplyr)
+library(ggplot2)
+```
+
+```{r}
+data <- read.csv("cytof_one_experiment (1).csv")
+```
+
+```{r}
+Pname <- colnames(data)
+reshaped_data <- pivot_longer(data,cols = Pname, names_to = "Proteins",values_to = "Amount")
+```
+
+```{r}
+summary_stats <- reshaped_data %>%
+group_by(Proteins) %>%
+summarise(median_protein_level = median(Amount),median_abs_deviation = mad(Amount))
+```
+
+```{r}
+sl_plot <- ggplot(summary_stats, aes(x = median_abs_deviation, y = median_protein_level)) + geom_point() + labs(x = "Median Absolute Deviation)", y = "Median Protein Level", title = "Spread-Location plot")
+```
+
+```{r}
+print(head(reshaped_data))
+print(dim(reshaped_data))
+print(summary_stats)
+print(sl_plot)
+```
+
+```{r}
+### the interpretation on this sl plot is to check if the median protein level is higher or MAD is higher. we can't say that the median or MAD is higher has a correlation to one another based on the plot because there are some which has the same mean but different MAD and vice-versa. also there is no clear trend between each other.
+
+```
